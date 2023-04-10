@@ -61,7 +61,7 @@ let package = Package(
             path: "Sources/WalletConnectSign"),
         .target(
             name: "WalletConnectChat",
-            dependencies: ["WalletConnectIdentity", "WalletConnectSigner"],
+            dependencies: ["WalletConnectIdentity", "WalletConnectSync"],
             path: "Sources/Chat"),
         .target(
             name: "Auth",
@@ -126,7 +126,7 @@ let package = Package(
             dependencies: ["QRCode", "WalletConnectSign"]),
         .target(
             name: "WalletConnectSync",
-            dependencies: ["WalletConnectNetworking"]),
+            dependencies: ["WalletConnectSigner"]),
         .testTarget(
             name: "WalletConnectSignTests",
             dependencies: ["WalletConnectSign", "WalletConnectUtils", "TestingUtils", "WalletConnectVerify"]),
