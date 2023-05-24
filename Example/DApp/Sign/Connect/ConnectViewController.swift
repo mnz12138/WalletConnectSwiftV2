@@ -5,7 +5,7 @@ import WalletConnectPairing
 
 class ConnectViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let uri: WalletConnectURI
-    let activePairings: [Pairing] = Pair.instance.getPairings()
+    var activePairings: [Pairing] = Pair.instance.getPairings()
     let segmentedControl = UISegmentedControl(items: ["Pairings", "New Pairing"])
 
     init(uri: WalletConnectURI) {
@@ -38,6 +38,8 @@ class ConnectViewController: UIViewController, UITableViewDataSource, UITableVie
         connectView.invisibleUriLabel.text = uri.absoluteString
         connectView.copyButton.addTarget(self, action: #selector(copyURI), for: .touchUpInside)
         connectView.connectWalletButton.addTarget(self, action: #selector(connectWithExampleWallet), for: .touchUpInside)
+        connectView.connectWallet2Button.addTarget(self, action: #selector(connect2WithExampleWallet), for: .touchUpInside)
+        connectView.connectWallet3Button.addTarget(self, action: #selector(connect3WithExampleWallet), for: .touchUpInside)
         connectView.tableView.dataSource = self
         connectView.tableView.delegate = self
         connectView.copyButton.isHidden = true
@@ -63,7 +65,31 @@ class ConnectViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     @objc func connectWithExampleWallet() {
-        let url = URL(string: "https://walletconnect.com/wc?uri=\(uri.absoluteString)")!
+        let url = URL(string: "trust://wc?uri=\(urlencode(uri.absoluteString))")!
+        print("url:",url)
+        DispatchQueue.main.async {
+            UIApplication.shared.open(url, options: [:]) { [weak self] _ in
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    @objc func connect2WithExampleWallet() {
+        let url = URL(string: "imtokenv2://wc?uri=\(urlencode(uri.absoluteString))")!
+        print("url:",url)
+        DispatchQueue.main.async {
+            UIApplication.shared.open(url, options: [:]) { [weak self] _ in
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    func urlencode(_ string: String) -> String {
+        let mstring = string.replacingOccurrences(of: " ", with: "+")
+        let legalURLCharactersToBeEscaped: CFString = "!*'\"();:@&=+$,/?%#[]% " as CFString
+        return CFURLCreateStringByAddingPercentEscapes(nil, mstring as CFString?, nil, legalURLCharactersToBeEscaped, CFStringBuiltInEncodings.UTF8.rawValue) as String
+    }
+    @objc func connect3WithExampleWallet() {
+        let url = URL(string: "rainbow://wc?uri=\(urlencode(uri.absoluteString))")!
+        print("url:",url)
         DispatchQueue.main.async {
             UIApplication.shared.open(url, options: [:]) { [weak self] _ in
                 self?.dismiss(animated: true, completion: nil)
@@ -77,7 +103,7 @@ class ConnectViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pairing_cell", for: indexPath)
-        cell.textLabel?.text = activePairings[indexPath.row].peer?.name ?? ""
+        cell.textLabel?.text = activePairings[indexPath.row].peer?.name ?? activePairings[indexPath.row].topic
         return cell
     }
 

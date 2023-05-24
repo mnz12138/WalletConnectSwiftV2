@@ -23,7 +23,25 @@ final class ConnectView: UIView {
 
     let connectWalletButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Connect Wallet", for: .normal)
+        button.setTitle("Connect Trust Wallet", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .semibold)
+        button.backgroundColor = .systemBlue
+        button.tintColor = .white
+        button.layer.cornerRadius = 8
+        return button
+    }()
+    let connectWallet2Button: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Connect Imtoken Wallet", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .semibold)
+        button.backgroundColor = .systemBlue
+        button.tintColor = .white
+        button.layer.cornerRadius = 8
+        return button
+    }()
+    let connectWallet3Button: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Connect Rainbow Wallet", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .semibold)
         button.backgroundColor = .systemBlue
         button.tintColor = .white
@@ -45,6 +63,8 @@ final class ConnectView: UIView {
         addSubview(invisibleUriLabel)
         addSubview(copyButton)
         addSubview(connectWalletButton)
+        addSubview(connectWallet2Button)
+        addSubview(connectWallet3Button)
         addSubview(tableView)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "pairing_cell")
         subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
@@ -55,20 +75,30 @@ final class ConnectView: UIView {
             tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
 
-            qrCodeView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
+            qrCodeView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
             qrCodeView.centerXAnchor.constraint(equalTo: centerXAnchor),
             qrCodeView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6),
             qrCodeView.widthAnchor.constraint(equalTo: qrCodeView.heightAnchor),
 
-            copyButton.topAnchor.constraint(equalTo: qrCodeView.bottomAnchor, constant: 16),
+            copyButton.topAnchor.constraint(equalTo: qrCodeView.bottomAnchor, constant: 10),
             copyButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            copyButton.widthAnchor.constraint(equalTo: qrCodeView.widthAnchor),
+            copyButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
             copyButton.heightAnchor.constraint(equalToConstant: 44),
 
-            connectWalletButton.topAnchor.constraint(equalTo: copyButton.bottomAnchor, constant: 16),
+            connectWalletButton.topAnchor.constraint(equalTo: copyButton.bottomAnchor, constant: 10),
             connectWalletButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             connectWalletButton.widthAnchor.constraint(equalTo: copyButton.widthAnchor),
-            connectWalletButton.heightAnchor.constraint(equalToConstant: 44)
+            connectWalletButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            connectWallet2Button.topAnchor.constraint(equalTo: connectWalletButton.bottomAnchor, constant: 10),
+            connectWallet2Button.centerXAnchor.constraint(equalTo: centerXAnchor),
+            connectWallet2Button.widthAnchor.constraint(equalTo: connectWalletButton.widthAnchor),
+            connectWallet2Button.heightAnchor.constraint(equalToConstant: 44),
+            
+            connectWallet3Button.topAnchor.constraint(equalTo: connectWallet2Button.bottomAnchor, constant: 10),
+            connectWallet3Button.centerXAnchor.constraint(equalTo: centerXAnchor),
+            connectWallet3Button.widthAnchor.constraint(equalTo: connectWallet2Button.widthAnchor),
+            connectWallet3Button.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 

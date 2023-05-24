@@ -39,22 +39,24 @@ class SelectChainViewController: UIViewController, UITableViewDataSource {
         let namespaces: [String: ProposalNamespace] = [
             "eip155": ProposalNamespace(
                 chains: [
-                    Blockchain("eip155:137")!
+                    Blockchain("eip155:1")!,
                 ],
                 methods: [
+                    "eth_sign",
+                    "eth_signTransaction",
                     "eth_sendTransaction",
                     "personal_sign",
                     "eth_signTypedData"
                 ], events: []
             ),
-            "eip155:1": ProposalNamespace(
-                methods: [
-                    "eth_sendTransaction",
-                    "personal_sign",
-                    "eth_signTypedData"
-                ],
-                events: []
-            )
+//            "eip155:1": ProposalNamespace(
+//                methods: [
+//                    "eth_sendTransaction",
+//                    "personal_sign",
+//                    "eth_signTypedData"
+//                ],
+//                events: []
+//            )
         ]
         let optionalNamespaces: [String: ProposalNamespace] = [
             "solana": ProposalNamespace(
@@ -74,8 +76,8 @@ class SelectChainViewController: UIViewController, UITableViewDataSource {
             let uri = try await Pair.instance.create()
             try await Sign.instance.connect(
                 requiredNamespaces: namespaces,
-                optionalNamespaces: optionalNamespaces,
-                sessionProperties: sessionProperties,
+//                optionalNamespaces: optionalNamespaces,
+//                sessionProperties: sessionProperties,
                 topic: uri.topic
             )
             showConnectScreen(uri: uri)
